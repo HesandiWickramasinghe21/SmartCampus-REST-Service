@@ -36,9 +36,9 @@ This is a RESTful API built using JAX-RS (Jersey) for the Smart Campus coursewor
 4. You should see something like this in the output:
 
 ```
-Discovery : http://localhost:57171/api/v1
-Rooms     : http://localhost:57171/api/v1/rooms
-Sensors   : http://localhost:57171/api/v1/sensors
+Discovery : http://localhost:8080/api/v1
+Rooms     : http://localhost:8080/api/v1/rooms
+Sensors   : http://localhost:8080/api/v1/sensors
 ```
 
 You can also run it from the terminal:
@@ -53,7 +53,7 @@ mvn clean compile exec:java
 ## Base URL
 
 ```
-http://localhost:57171/api/v1
+http://localhost:8080/api/v1/
 ```
 
 ---
@@ -79,50 +79,49 @@ http://localhost:57171/api/v1
 
 ```bash
 # 1. Discovery endpoint
-curl -s http://localhost:57171/api/v1
+curl -s http://localhost:8080/api/v1
 
 # 2. List all rooms
-curl -s http://localhost:57171/api/v1/rooms
+curl -s http://localhost:8080/api/v1/rooms
 
 # 3. Get a specific room
-curl -s http://localhost:57171/api/v1/rooms/LIB-301
+curl -s http://localhost:8080/api/v1/rooms/LIB-301
 
 # 4. Create a new room
-curl -s -X POST http://localhost:57171/api/v1/rooms ^
+curl -s -X POST http://localhost:8080/api/v1/rooms ^
   -H "Content-Type: application/json" ^
   -d "{\"id\":\"CONF-202\",\"name\":\"Conference Room B\",\"capacity\":20}"
 
 # 5. Filter sensors by type
-curl -s "http://localhost:57171/api/v1/sensors?type=CO2"
+curl -s "http://localhost:8080/api/v1/sensors?type=CO2"
 
 # 6. Register a new sensor
-curl -s -X POST http://localhost:57171/api/v1/sensors ^
+curl -s -X POST http://localhost:8080/api/v1/sensors ^
   -H "Content-Type: application/json" ^
   -d "{\"id\":\"TEMP-099\",\"type\":\"Temperature\",\"status\":\"ACTIVE\",\"currentValue\":20.0,\"roomId\":\"LIB-301\"}"
 
 # 7. Add a reading for a sensor
-curl -s -X POST http://localhost:57171/api/v1/sensors/TEMP-001/readings ^
+curl -s -X POST http://localhost:8080/api/v1/sensors/TEMP-001/readings ^
   -H "Content-Type: application/json" ^
   -d "{\"value\":24.5}"
 
 # 8. Get all readings for a sensor
-curl -s http://localhost:57171/api/v1/sensors/TEMP-001/readings
+curl -s http://localhost:8080/api/v1/sensors/TEMP-001/readings
 
 # 9. Try to delete a room that still has sensors (expect 409 Conflict)
-curl -s -X DELETE http://localhost:57171/api/v1/rooms/LIB-301
+curl -s -X DELETE http://localhost:8080/api/v1/rooms/LIB-301
 
 # 10. Add a reading to a MAINTENANCE sensor (expect 403 Forbidden)
-curl -s -X POST http://localhost:57171/api/v1/sensors/LIGHT-001/readings ^
+curl -s -X POST http://localhost:8080/api/v1/sensors/LIGHT-001/readings ^
   -H "Content-Type: application/json" ^
   -d "{\"value\":5.0}"
 
 # 11. Register a sensor with a roomId that doesn't exist (expect 422)
-curl -s -X POST http://localhost:57171/api/v1/sensors ^
+curl -s -X POST http://localhost:8080/api/v1/sensors ^
   -H "Content-Type: application/json" ^
   -d "{\"id\":\"TEMP-999\",\"type\":\"Temperature\",\"status\":\"ACTIVE\",\"currentValue\":0.0,\"roomId\":\"FAKE-999\"}"
 ```
 
-## Author
 
 **Student:** Hesandi Sandesna Wickramasinghe 
 
